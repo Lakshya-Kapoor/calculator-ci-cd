@@ -1,0 +1,29 @@
+# Build output
+target/
+
+# Git
+.git/
+.gitattributes
+.gitignore
+.github/
+
+# Maven wrapper (the build stage uses the image's own Maven)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Docs and project files
+HELP.md
+README.md
+*.docx
+*.pdf
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
