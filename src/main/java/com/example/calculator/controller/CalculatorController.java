@@ -45,6 +45,16 @@ public class CalculatorController {
         return new CalculatorResponse("divide", a, b, result);
     }
 
+    @GetMapping("/mod")
+    public CalculatorResponse mod(@RequestParam double a, @RequestParam double b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Modulus by zero is not allowed");
+        }
+
+        double result = a % b;
+        return new CalculatorResponse("mod", a, b, result);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException exception) {
         return ResponseEntity.badRequest().body(new ErrorResponse(exception.getMessage()));
