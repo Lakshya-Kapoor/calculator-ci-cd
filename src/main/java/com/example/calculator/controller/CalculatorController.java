@@ -1,5 +1,7 @@
 package com.example.calculator.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CalculatorController {
 
     public record CalculatorResponse(String operation, double a, double b, double result) {
+    }
+
+    public record ErrorResponse(String error) {
     }
 
     @GetMapping("/add")
@@ -33,10 +38,15 @@ public class CalculatorController {
     @GetMapping("/divide")
     public CalculatorResponse divide(@RequestParam double a, @RequestParam double b) {
         if (b == 0) {
-            throw new IllegalArgumentException("Division by zero is not allowed.");
+            throw new IllegalArgumentException("Division by zero is not allowed");
         }
 
         double result = a / b;
         return new CalculatorResponse("divide", a, b, result);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException exception) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(exception.getMessage()));
     }
 }
