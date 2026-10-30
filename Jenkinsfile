@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Set this to your own Docker Hub namespace/repository before the first run.
-        DOCKERHUB_REPO  = 'lakshyakapoor/calculator'
+        DOCKERHUB_REPO  = 'mockingjay123/calculator-api'
         // ID of the Jenkins "Username with password" credential holding the Docker Hub login.
         DOCKERHUB_CREDS = 'dockerhub-credentials'
 
@@ -12,7 +12,7 @@ pipeline {
 
         IMAGE_TAG    = "${env.BUILD_NUMBER}"
         PROXY_PORT   = '8081'
-        NOTIFY_EMAIL = 'lakshya.kapoor@iiitb.ac.in'
+        NOTIFY_EMAIL = 'laqshyakapoor@gmail.com'
     }
 
     options {
