@@ -48,6 +48,14 @@ public class CalculatorControllerIntegrationTest {
     }
 
     @Test
+    void shouldModNumbers() throws Exception {
+        mockMvc.perform(get("/api/v1/mod?a=10&b=3"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.operation").value("mod"))
+                .andExpect(jsonPath("$.result").value(1));
+    }
+
+    @Test
     void shouldRejectDivisionByZero() throws Exception {
         mockMvc.perform(get("/api/v1/divide?a=10&b=0"))
                 .andExpect(status().isBadRequest())
@@ -58,5 +66,12 @@ public class CalculatorControllerIntegrationTest {
     void shouldRejectMissingParameter() throws Exception {
         mockMvc.perform(get("/api/v1/add?a=10"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldRejectModulusByZero() throws Exception {
+        mockMvc.perform(get("/api/v1/mod?a=10&b=0"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Modulus by zero is not allowed"));
     }
 }

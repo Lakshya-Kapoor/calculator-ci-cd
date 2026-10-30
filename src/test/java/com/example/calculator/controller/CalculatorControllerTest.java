@@ -50,6 +50,15 @@ public class CalculatorControllerTest {
     }
 
     @Test
+    void shouldModNumbers() {
+        var response = controller.mod(10, 3);
+        assertEquals("mod", response.operation());
+        assertEquals(10, response.a());
+        assertEquals(3, response.b());
+        assertEquals(1, response.result());
+    }
+
+    @Test
     void shouldRejectDivisionByZero() {
         var exception = assertThrows(
                 IllegalArgumentException.class,
@@ -59,5 +68,16 @@ public class CalculatorControllerTest {
                 "Division by zero is not allowed",
                 exception.getMessage());
 
+    }
+
+    @Test
+    void shouldRejectModulusByZero() {
+        var exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> controller.mod(10, 0));
+
+        assertEquals(
+                "Modulus by zero is not allowed",
+                exception.getMessage());
     }
 }
